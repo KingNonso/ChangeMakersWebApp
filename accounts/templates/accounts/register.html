@@ -1,0 +1,189 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block page_title %}
+    Register
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+{% block breadcrumbs %}
+{{ block.super }}
+    {% breadcrumb "Register" "register" %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block css %}
+<!-- XDSoft DateTimePicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    <div class="container">
+
+        <section>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="heading">
+                        <h2>Register </h2>
+                    </div>
+
+                    <p class="lead">To become a member of this prestigious institution, please fill the form below and your account will be confirmed by the Administrator, when you attend the meeting, then your digital certificate will be ready for download. <br>
+                    <!-- <strong>See right box for different membership types, fees/ dues and associated benefits</strong> -->
+                    </p>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <form method="post" action="." enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-row">
+                         <div class="form-group col-md-6 ">
+                           {{ user_form.first_name|as_crispy_field }}
+                         </div>
+                         <div class="form-group col-md-6">
+                           {{ user_form.last_name|as_crispy_field }}
+                         </div>
+                         <!-- <div class="form-group col-md-4">
+                           {{ form.other_name|as_crispy_field }}
+                         </div> -->
+                       </div>
+                       <div class="form-row">
+                           <div class="form-group col-md-6">
+                               {{ user_form.email|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6">
+                               {{ form.primary_phone|as_crispy_field }}
+                           </div>
+
+                       </div>
+                       <div class="form-row">
+                           <div class="form-group col-md-6">
+                               {{ form.dob|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6">
+                               {{ form.nse_no|as_crispy_field }}
+                           </div>
+
+
+
+                       </div>
+                       <div class="form-row">
+                           <div class="form-group col-md-6">
+                               {{ form.membership_type|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6">
+                               {{ form.work|as_crispy_field }}
+                           </div>
+
+                           <!-- <div class="form-group col-md-4">
+                               {{ form.coren_no|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6">
+                               {{ form.job|as_crispy_field }}
+                           </div> -->
+
+                       </div>
+                       <div class="form-row">
+                           <!-- <div class="form-group col-md-12">
+                               {{ form.address|as_crispy_field }}
+                           </div> -->
+                           <div class="form-group col-md-12">
+                               {{ form.bio|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6 ">
+                             {{ form.photo|as_crispy_field }}
+                           </div>
+                           <div class="form-group col-md-6 ">
+                             {{ form.gender|as_crispy_field }}
+                           </div>
+
+                       </div>
+                       <div class="form-row">
+                        <div class="form-group col-md-12 ">
+                          {{ user_form.username|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6">
+                          {{ user_form.password|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6">
+                          {{ user_form.password2|as_crispy_field }}
+                        </div>
+
+                      </div>
+
+                       <div class="form-row">
+                           <div class="form-group col-md-12">
+                               <button type="submit" class="btn btn-primary btn-block btn-lg ">Create Account</button>
+                           </div>
+                       </div>
+
+
+                      </form>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-group accordion" id="accordionThree">
+                        {% for item in membership_type %}
+                        <div class="panel panel-default">
+
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordionThree" href="#collapse{{ forloop.counter }}">
+                                        {{ item.get_type_display }} (&#8358;{{ item.initial_cost }})
+                                    </a>
+
+                                </h4>
+                            </div>
+                            <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse {% if forloop.counter == 1 %} in{% endif %} ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {{ item.benefits }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /#contact.container -->
+
+
+
+
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#id_dob").datetimepicker({
+                timepicker:false,
+                format: 'd/m/Y',
+                // theme:'dark',
+                lang:'en',
+                closeOnDateSelect:true,
+                // minDate:0,
+                maxDate:0,
+            });
+        });
+    </script>
+{% endblock %}

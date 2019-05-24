@@ -1,0 +1,175 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}
+    {{ story.title }}
+{% endblock %}
+
+{% block description %}
+    {{ story.body |truncatewords:60 }}
+{% endblock %}
+
+{% block keywords %}
+    {% for tag in story.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block page_title %}
+    {{ story.title }}
+{% endblock %}
+
+{% block page_lead %}
+    {{ story.get_type_display }}
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "News and Events" "blog:index" %}
+    {% breadcrumb story.title "blog:detail" %}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+{% load humanize %}
+
+<section class="blog-post">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="post-content margin-bottom--big">
+            {% if story.image_set.count > 1 %}
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators">
+                  {% for pix in story.image_set.all %}
+                    <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" {% if forloop.counter0 == 0 %} class="active" {% endif %}></li>
+                    {% endfor %}
+                  </ol>
+
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner">
+                  {% for pix in story.image_set.all %}
+                    <div class="item {% if forloop.counter0 == 0 %} active {% endif %}">
+                      <img src="{{ pix.image.url }}" alt="{{ pix.description }}">
+                    </div>
+                    {% endfor %}
+                  </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <i class="pe-7s-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <i class="pe-7s-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+            {% elif story.image_set.count == 1 %}
+            <div class="image"><a href="{{ story.get_absolute_url }}"><img src="{{ story.image_set.first.image.url }}" alt="{{ story.image_set.first.description }}"  class="img-responsive img-thumbnail"></a></div>
+
+            {% endif %}
+
+          <h2> {{ story.title }} </h2>
+          <blockquote>
+              <p>{{ story.get_type_display }}</p>
+              {% if story.type != 'news' %}
+                  <p>Event Date: {{ story.date }}</p>
+              {% else %}
+                  <p>Published: {{ story.date }}</p>
+              {% endif %}
+          </blockquote>
+          {% if story.video_set.count %}
+              {% for vid in story.video_set.all %}
+                  <iframe src="{{ vid.video }}" ></iframe>
+                  <p>{{ vid.description }}</p>
+              {% endfor %}
+          {% endif %}
+          <p>{{ story.body |linebreaksbr }} </p>
+
+
+        </div>
+        <!-- /.post-content-->
+      </div>
+    </div>
+  </div>
+</section>
+{% if similar_posts %}
+<section class="background-gray-lightest section--padding-bottom-small">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="text-center text-uppercase margin-bottom">Similar Posts</h4>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+        {% for story in similar_posts %}
+            <div class="col-sm-4">
+                <div class="post">
+                    <div class="image"><a href="{{ story.get_absolute_url }}"><img src="{{ story.image_set.first.image.url }}" alt="{{ story.image_set.first.description }}" class="img-responsive"></a></div>
+                    <h3><a href="{{ story.get_absolute_url }}">{{ story.title }}</a></h3>
+                    <p class="post__intro">{{ story.body | truncatewords:30 }}</p>
+                    <p class="read-more"><a href="{{ story.get_absolute_url }}" class="btn btn-ghost">View     </a></p>
+                </div>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section>
+  <div id="contact" class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-pen"></i></div>
+          <div class="content">
+            <h4>
+                Comments
+                {% with comments.count as total_comments %}
+                    {% if total_comments > 0 %}
+                        <span class="badge">{{ total_comments }}</span>
+
+                    {% endif %}
+                {% endwith %}
+
+            </h4>
+            {% if new_comment %}
+            <p>Thank you for your comment</p>
+            {% else %}
+
+                <p class="text-muted">Feel free to leave some feedback. Thanks</p>
+
+                {% include 'cms/form.html' %}
+            {% endif %}
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    {% for comment in comments %}
+      <div class="col-md-12">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-user"></i></div>
+          <div class="content">
+
+            <h4>{{ comment.name }} <small>{{ comment.created|naturaltime }}</small>
+            </h4>
+            <p>{{ comment.body|linebreaks }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

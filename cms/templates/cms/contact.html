@@ -1,0 +1,90 @@
+
+{% extends 'cms/base.html' %}
+
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block description %}
+    Contact - Inclusive Friends Association
+{% endblock %}
+
+{% block keywords %}
+    Contact us, Inclusive Friends Association, phone number, email, address, space
+{% endblock %}
+
+{% block page_title %}
+    Contact us
+{% endblock %}
+
+{% block page_lead %}
+    Find below, our contact information
+{% endblock %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "Contact Us" "cms:contact" %}
+{% endblock %}
+
+{% block content %}
+
+<section>
+  <div id="contact" class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-map-2"></i></div>
+          <div class="content">
+            <h4>Address</h4>
+            <p>{{ contact.address }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-phone"></i></div>
+          <div class="content">
+            <h4>Call Us</h4>
+            <p class="text-muted">Feel free to reach us for enquiries and donations and events</p>
+            {% for item in contact.get_phone  %}
+            <p><strong>{{ item }}</strong></p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-mail-open"></i></div>
+          <div class="content">
+            <h4>E-mail support</h4>
+            <p class="text-muted">Please feel free to write an email to us .</p>
+            <ul>
+                {% for item in contact.get_email  %}
+                <li><strong><a href="mailto:{{ item }}">{{ item }}</a></strong></li>
+                {% endfor %}
+
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="box-simple">
+          <div class="icon"><i class="pe-7s-pen"></i></div>
+          <div class="content">
+            <h4>Contact form</h4>
+            <p class="text-muted">Got a request, enquiry, something you would like to tell us. Use the form below. Our site administrators will get back to you ASAP.</p>
+
+            {% include 'cms/form.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

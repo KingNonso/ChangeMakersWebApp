@@ -1,0 +1,37 @@
+h2.center {
+    align-self: center;
+}
+
+/* We had to change pink #ef5285 to blue #4169e1  */
+
+.bg-pink {
+  background-color: #6495ed;
+  color: black;
+
+}
+
+.bg-pink a {
+    color: #fff;
+}
+
+.bg-dark-pink {
+  background-color: #c2185b;
+  color: black;
+}
+
+.bg-copyright-footer {
+    color: #fff;
+    font-size: 16px
+    background-color: #000;
+    text-align: center;
+    text-decoration: none;
+}
+
+.bg-pink h5 {
+    margin-top: 40px;
+    text-align: left;
+}
+
+/* .my-group .form-control{
+    width:50%;
+} */

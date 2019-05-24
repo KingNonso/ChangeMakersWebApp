@@ -1,0 +1,107 @@
+{% load static %}
+<!-- navbar-->
+<header class="header">
+  <div role="navigation" class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header"><a href="{% url 'cms:home' %}" class="navbar-brand">
+          {% if active_page == 'home' %}
+          <img src="{% static 'cms/img/ifa_logo.png' %}" alt="IFA Logo" width="80px" height="80px" class="hidden-sm hidden-xs">
+          <span class="hidden-md hidden-lg">IFA.</span>
+           {% else %}
+           IFA.
+           {% endif %}
+      </a>
+        <div class="navbar-buttons">
+          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle navbar-btn">Menu<i class="fa fa-align-justify"></i></button>
+        </div>
+      </div>
+      <div id="navigation" class="collapse navbar-collapse navbar-right">
+        <ul class="nav navbar-nav">
+          <li {% if active_page == 'home' %} class="active" {% endif %}><a href="{% url 'cms:home' %}">Home</a></li>
+          <li {% if active_page == 'about' %} class="active" {% endif %}><a href="{% url 'cms:about' %}">About</a></li>
+          <li {% if active_page == 'blog' %} class="active" {% endif %}><a href="{% url 'blog:index' %}">News</a></li>
+
+          <!-- <li {% if active_page == 'gallery' %} class="active" {% endif %}><a href="{% url 'cms:gallery' %}">Gallery</a></li> -->
+          <li {% if active_page == 'contact' %} class="active" {% endif %}><a href="{% url 'cms:contact' %}">Contact</a></li>
+      </ul>
+
+      <a href="#" data-toggle="modal" data-target="#login-modal" {% if active_page == 'home' %} class="btn navbar-btn btn-white pull-left" {% else %} class="btn navbar-btn btn-ghost pull-left" {% endif %} ><i class="fa fa-sign-in"></i>Donate </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- *** Payment MODAL ***_________________________________________________________
+-->
+<div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+        <h4 id="Login" class="modal-title">Donate to Our Cause </h4>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'project:donate' %}" method="post">
+            {% csrf_token %}
+
+
+            <div class="form-group">
+              <label for="donor_amount">Amount</label>
+              <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span id="currency">
+                            NGN (&#8358;)
+                        </span>
+                        <input type="hidden" name="currency_type" id="currency_type" value="NGN">
+
+                      <span class="fa fa-caret-down"></span></button>
+                    <ul class="dropdown-menu" id="select_currency">
+                      <li><a href="javascript:void(0)"><span>NGN</span> (&#8358;)</a></li>
+                      <li><a href="javascript:void(0)"><span>USD</span> (&#36;)</a></li>
+                      <li><a href="javascript:void(0)"><span>GBP</span> (&#163;)</a></li>
+                    </ul>
+                  </div>
+                <input type="number" id="donor_amount" name="donor_amount" class="form-control" aria-label="Amount (to the nearest currency)" min="1">
+                <div class="input-group-addon">
+                  <span class="input-group-text">.00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="donor_name">Name</label>
+              <input id="donor_name" name="donor_name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="donor_email">Email</label>
+              <input id="donor_email" name="donor_email" type="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="donor_phone_number">Phone Number</label>
+              <input id="donor_phone_number" name="donor_phone_number" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                  <label><input id="partner" name="partner" type="checkbox" value="partner">Become a partner</label>
+                </div>
+            </div>
+
+          <p class="text-center">
+            <button type="submit" class="btn btn-primary"  name="pay_now" id="pay-now" title="Pay now"><i class="fa fa-sign-in"></i>Donate Now </button>
+          </p>
+        </form>
+        <p class="text-center text-muted">Hampton Apartment D1 No. 2, Mungo Park close, Asokoro, Area 11, Abuja, Nigeria</p>
+        <p class="text-center text-muted">
+            <ul>
+                <li><strong>UBA Acount Number</strong> 1017672279 </li>
+                <li><strong>Diamond Acount Number</strong> 0088547364 </li>
+                <li><strong>Acount Name</strong> Inclusive Friends Association </li>
+                <li>All Accounts are based in Nigeria Naira</li>
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- *** Payment MODAL END ***-->

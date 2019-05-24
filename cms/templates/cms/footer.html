@@ -1,0 +1,123 @@
+{% load static %}
+<footer class="footer bg-pink">
+
+    <!-- Footer Links -->
+    <div class="container text-left">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="{% static 'cms/img/ifa_logo.png' %}" alt="IFA Logo" width="80px" height="80px">
+                </div>
+                <div class="col-sm-8">
+                    <h5 class="text-uppercase">Inclusive Friends Association IFA. </h5>
+                </div>
+
+            </div>
+          <!-- Content -->
+          <hr>
+          <p>
+              Hampton Apartment D1 No. 2, Mungo Park close, Asokoro, Area 11, Abuja, Nigeria
+              <br>
+              For Persons with Disability, By Persons with Disability
+          </p>
+
+        </div>
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+        <div class="col-md-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Links</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="{% url 'cms:home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'cms:about' %}">About Us</a>
+              </li>
+              <li>
+                <a href="{% url 'cms:contact' %}">Contact Us</a>
+              </li>
+              <li>
+                  <a href="#" data-toggle="modal" data-target="#login-modal">Donate </a>
+              </li>
+            </ul>
+
+        </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+      <div class="col-md-3">
+
+            <!-- Links -->
+            <h5 class="text-uppercase">Socials</h5>
+
+            <ul class="list-unstyled">
+              <li>
+                <a href="https://Facebook.com/inclusivefriends">Facebook</a>
+              </li>
+              <li>
+                <a href="https://instagram.com/inclusivefriends">Instagram</a>
+              </li>
+              <li>
+                <a href="https://twitter.com/inclusivefrnds">Twitter</a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/channel/UCrLgJ-rH9eFNZ275993s6BQ">Youtube</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </div>
+    <!-- Footer Links -->
+
+  </footer>
+  <!-- Footer -->
+<footer class="footer">
+  <div class="footer__copyright">
+      <div class="container">
+        <div class="row bg-copyright-footer ">
+          <div class="col-md-12">
+              <p>Designed, Developed and Decorated with <i class="pe-7s-like"></i></p>
+            <h5 style="color:#fff;">&copy;2019 <a href="https://techamaka.com/" class="external">Techamaka Web Developers </a></h5>
+            <!-- <p class="credit" >Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious templates</a></p> -->
+            <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+          </div>
+
+        </div>
+      </div>
+  </div>
+</footer>
+<!-- Javascript files-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="{% static 'cms/js/bootstrap.min.js' %}"></script>
+<!-- <script src="{% static 'cms/js/jquery.cookie.js' %}"> </script>
+<script src="{% static 'cms/js/lightbox.min.js' %}"></script>
+<script src="{% static 'cms/js/front.js' %}"></script> -->
+
+<script>
+    $(document).ready(function(){
+        $('ul#select_currency li').click(function(e){
+            var currency = ($(this).find("a").text());
+            var note = ($(this).find("a span").text());
+             $("span#currency").text(currency);
+             $('input#currency_type').val(note);
+
+        });
+
+     });
+
+</script>

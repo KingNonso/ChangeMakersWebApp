@@ -1,0 +1,74 @@
+
+{% extends 'cms/base.html' %}
+
+{% block title %}
+    About - Inclusive Friends Association
+{% endblock %}
+
+{% block description %}
+    About - Inclusive Friends Association
+{% endblock %}
+
+{% block keywords %}
+    About us, Inclusive Friends Association,
+{% endblock %}
+
+{% block page_title %}
+    About us
+{% endblock %}
+
+{% block page_lead %}
+    About us: Our vision and mission
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "About Us" "cms:about" %}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+{% for about in about_us %}
+<section class=" {% cycle '' 'background-gray-lightest' %}">
+    <div class="container clearfix">
+        <div class="row services">
+          <div class="col-md-12">
+          <h2> {{ about.title }} </h2>
+
+            <p class="lead margin-bottom--medium"> {{ about.description|linebreaksbr }}</p>
+
+
+          </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+<section class="bg-pink">
+  <div class="container">
+    <h1>Thematic Areas </h1>
+    <p class="lead"><strong>Key Areas of Focus</strong></p>
+  </div>
+</section>
+{% for theme in themes %}
+<section class=" {% cycle '' 'background-gray-lightest' %}">
+    <div class="container clearfix">
+        <div class="row services">
+            <h2> {{ theme.title }} </h2>
+            <div class="col-sm-3">
+              <div class="box box-services">
+                <div class="icon"><i class="{{ theme.icon }}"></i></div>
+              </div>
+            </div>
+          <div class="col-md-9">
+            <p class="lead margin-bottom--medium"> {{ theme.description|linebreaksbr }}</p>
+          </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+
+{% endblock %}

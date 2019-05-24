@@ -1,0 +1,66 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block page_title %}
+    Login
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+{% block breadcrumbs %}
+{{ block.super }}
+    {% breadcrumb "Login" "login" %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div id="content">
+    <div class="container">
+
+        <section>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="heading">
+                        <h2>Login </h2>
+                    </div>
+
+                    <p class="lead">To login, enter your credentials below <br>
+                    </p>
+
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <form method="post">
+                      {% csrf_token %}
+                      {{ form|crispy }}
+                      <input type="hidden" name="next" value="{{ next  }}">
+
+                      <button type="submit" class="btn btn-primary">Login</button>
+                      <small>
+                          <a href="{% url 'password_reset' %}" class="text-muted">Forgot your password?</a>
+                        </small>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!-- /#contact.container -->
+
+
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,1 @@
+Welcome {{ user.get_full_name }} to NSE Abuja Professional Website
